@@ -112,7 +112,7 @@ class SearchsFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 (mUsers as ArrayList<User>).clear()
                 for(snap in snapshot.children){
-                    val user: User? = snapshot.getValue(User::class.java)
+                    val user: User? = snap.getValue(User::class.java)
                     if(!(user!!.getUid()).equals(firebaseUserUID)){
                         (mUsers as ArrayList<User>).add(user)
                     }

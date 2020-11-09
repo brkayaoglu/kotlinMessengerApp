@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="9dp"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/profile_image_near_message"
+            android:src="@drawable/profile"
+            android:visibility="gone"></de.hdodenhof.circleimageview.CircleImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_message_show"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="test message"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:background="@drawable/background_right"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="6dp"></TextView>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/right_image_message"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="6dp"
+            android:visibility="gone"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_seen"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="seen"
+            android:layout_below="@id/text_message_show"></TextView>
+    </RelativeLayout>
+
+</RelativeLayout>

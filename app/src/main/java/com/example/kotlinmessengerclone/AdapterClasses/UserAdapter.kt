@@ -1,13 +1,20 @@
 package com.example.kotlinmessengerclone.AdapterClasses
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinmessengerclone.MessageChatActivity
 import com.example.kotlinmessengerclone.ModelClasses.User
 import com.example.kotlinmessengerclone.R
+import com.example.kotlinmessengerclone.WelcomeActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,6 +63,16 @@ class UserAdapter(mContext: Context, mUsers: List<User>, isChatCheck: Boolean ):
         val user: User? = mUsers[position]
         holder.userNameTxt.text = user!!.getUsername()
         Picasso.get().load(user.getProfile()).placeholder(R.drawable.profile).into(holder.profileImageView)
+
+        holder.itemView.findViewById<LinearLayout>(R.id.user_line).setOnClickListener {
+            val intent = Intent(mContext, MessageChatActivity::class.java)
+            intent.putExtra("visit_id", user.getUid())
+            mContext.startActivity(intent)
+        }
+
+        holder.itemView.findViewById<ImageView>(R.id.profile_image).setOnClickListener {
+
+        }
     }
 
 

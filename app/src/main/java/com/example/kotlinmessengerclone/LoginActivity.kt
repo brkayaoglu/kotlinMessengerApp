@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.title = "Register"
+        supportActionBar!!.title = "Login"
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 

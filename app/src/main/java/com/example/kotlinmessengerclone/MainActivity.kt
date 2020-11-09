@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.kotlinmessengerclone.Fragments.ChatsFragment
 import com.example.kotlinmessengerclone.Fragments.SearchsFragment
 import com.example.kotlinmessengerclone.Fragments.SettingsFragment
+import com.example.kotlinmessengerclone.ModelClasses.Chat
 import com.example.kotlinmessengerclone.ModelClasses.User
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -48,15 +49,35 @@ class MainActivity : AppCompatActivity() {
         val tabLayout : TabLayout = findViewById(R.id.tablayout)
         val viewPager : ViewPager = findViewById(R.id.view_pager)
 
-        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+        val refChats = FirebaseDatabase.getInstance().reference.child("Chats")
+        refChats!!.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+                var countUnreadMessages = 0
+                for(snap in snapshot.children){
+                    var chat : Chat? = snap.getValue(Chat::class.java)
 
-        viewPagerAdapter.addFragment(ChatsFragment(), title = "Chats")
-        viewPagerAdapter.addFragment(SearchsFragment(), title = "Search")
-        viewPagerAdapter.addFragment(SettingsFragment(), title = "Settings")
+                    if((chat!!.getReceiver().equals(firebaseUser!!.uid)) && (!chat.getIsSeen())){
+                        countUnreadMessages += 1
+                    }
+                }
 
-        viewPager.adapter = viewPagerAdapter
-        tabLayout.setupWithViewPager(viewPager)
+                if(countUnreadMessages == 0){
+                    viewPagerAdapter.addFragment(ChatsFragment(), title = "Chats")
+                }else{
+                    viewPagerAdapter.addFragment(ChatsFragment(), title = "($countUnreadMessages) Chats")
+                }
+                viewPagerAdapter.addFragment(SearchsFragment(), title = "Search")
+                viewPagerAdapter.addFragment(SettingsFragment(), title = "Settings")
+                viewPager.adapter = viewPagerAdapter
+                tabLayout.setupWithViewPager(viewPager)
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
         //display username on AppBar
         refUsers!!.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
